@@ -1,0 +1,76 @@
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core</artifactId>
+	<version>5.4.0.Final</version>
+</dependency>
+
+@Entity
+@Table(name = “nume”)
+
+@Id
+
+in Resources -> folder META-INF -> fisier persistence.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version=“2.0”
+	xmlns="http://java.sun.com/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="TestPersistence" transaction-type="RESOURCE_LOCAL">
+		<description>Hibernate EntityManager Demo</description>
+        <class><!-- Entity Manager Class Name --></class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value=“update”/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="javax.persistence.jdbc.driver" value=“com.mysql.jdbc.Driver” />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.248.84.92:3306/julliaDemo?useSSL=false” />
+            <property name="javax.persistence.jdbc.user" value=“java” />
+            <property name="javax.persistence.jdbc.password" value=“Javaestetare123!” />
+        </properties>
+    </persistence-unit>
+</persistence>
+
+
+in metoda de save()
+
+User user = new User();
+user.set..
+//pornim framework hibernate
+EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(“TestPersistence”);
+EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+Session session = entityManager.unwrap(Session.class);
+session.getTransaction().begin();
+//salveaza obiectul user
+session.persist(user);
+
+session.getTransaction.commit();
+session.flush();
+
+
+—
+
+dependinta Spring Data JPA
+<dependency>
+	<groupId> org.springframework.boot
+	<artifactId< spring-boot-starter-data-jpa
+
+bean: @PersistenceContext
+EntityManager entityManager;
+
+pt salvare:
+entityManager.persist(user)
+
+la punctul de start, dupa @SpringBootApplication se mai pune @EnableTransactionManagement
+si @Transactional pe save(); in repository
+
+pt select:
+
+Query query = entityManager.createNativeQuery(“select * from users where email= ‘“+email+”’”, User.class);
+return query.getResultList();
+
+in app properties:
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
