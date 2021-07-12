@@ -1,0 +1,13 @@
+- Your API key is 1a0b24379672da33adcf5b7b30e5c4c2
+api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=1a0b24379672da33adcf5b7b30e5c4c2
+
+https://openweathermap.org/api
+
+URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q=Bucharest,ro&appid=1a0b24379672da33adcf5b7b30e5c4c2");
+
+URLConnection urlConnection = url.openConnection();
+
+Scanner scanner = new Scanner(urlConnection.getInputStream());
+while (scanner.hasNext()){
+    System.out.println(scanner.nextLine());
+}
