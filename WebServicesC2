@@ -1,0 +1,33 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+var refresh = function(){
+$.ajax({
+  url: "/get-all-todos"
+}).done(function(response){
+  alert(response);
+  var todos = response;
+  var todosElement = document.getelementById("todos");
+  for(var i = 0; i<todos.length; i++){
+    var newTodoLi.innerText = todos[i].descriptionl
+    todosElement.append(newTodoLi);
+  }
+});
+};
+
+$("#add").click(function(){
+  var newToDo = $("#new-todo").val();
+  $.ajax({
+    url: "/add-new-todo",
+    type: "post",
+    data: JSON.stringify){
+      "description" : "mere",
+      "solved" : true
+    }),
+    contentType:"application/json"
+  }
+  ).done(function(response){
+    refresh();
+  }
+});
+</script>
